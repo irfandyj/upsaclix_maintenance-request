@@ -1,17 +1,17 @@
 import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 
 enum MaintenanceTicketUrgency {
-  NON_URGENT,
-  LESS_URGENT,
-  URGENT,
-  EMERGENCY
+  NON_URGENT = "non_urgent",
+  LESS_URGENT = "less_urgent",
+  URGENT = "urgent",
+  EMERGENCY = "emergency"
 }
 
 enum MaintenanceTicketStatus {
-  OPEN,
-  IN_PROGRESS,
-  RESOLVED,
-  CLOSED
+  OPEN = "open",
+  IN_PROGRESS = "in_progress",
+  RESOLVED = "resolved",
+  CLOSED = "closed"
 }
 
 registerEnumType(MaintenanceTicketUrgency, {

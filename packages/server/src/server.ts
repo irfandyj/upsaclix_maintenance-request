@@ -1,18 +1,16 @@
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
-import schema from "./graphql/schema";
-import { rootResolvers } from "./graphql/resolvers";
+import express from 'express'
+import setupGraphQLYoga from './graphql'
 
-const server = express();
+function setupServer() {
+  const yoga = setupGraphQLYoga()
+  const server = express()
+  
+  // Bind GraphQL Yoga to the graphql endpoint to avoid rendering the playground on any path
+  server.use(yoga.graphqlEndpoint, yoga)
+  
+  return server
+}
 
-// setup graphql
-server.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: rootResolvers,
-    graphiql: true,
-  })
-);
+const server = setupServer()
 
-export default server;
+export default server

@@ -10,7 +10,6 @@ const StatCard: React.FC<StatCardProps> = ({
   title,
   value
 }) => {
-  console.log(styles)
   return (
     <div className={`StatCard ${styles.StatCard}`}>
       <div className="StatCard__value text-4xl font-medium text-primary">{value}</div>

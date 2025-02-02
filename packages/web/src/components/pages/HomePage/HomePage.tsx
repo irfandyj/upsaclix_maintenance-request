@@ -1,4 +1,5 @@
 import HomePageStatCards from '@/components/organisms/HomePageStatCards';
+import HomePageTicketList from '@/components/organisms/HomePageTicketList';
 import React from 'react';
 
 const MaintenanceRequestDashboard = () => {
@@ -9,14 +10,14 @@ const MaintenanceRequestDashboard = () => {
   ]
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="HomePage p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl text-center font-semibold mt-[68px] mb-[22px]">Maintenance Request</h1>
 
       {/* Maintenance Ticket Stats */}
-      <HomePageStatCards stats={stats} />
+      <HomePageStatCards className="mb-6" stats={stats} />
 
       {/* Maintenance Ticket List */}
-      
+      <HomePageTicketList />
 
       {/* Add button */}
     </div>

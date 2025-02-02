@@ -18,7 +18,9 @@ const MaintenanceRequestDashboard = () => {
       </div>
       
       {/* Create Maintenance Ticket Form */}
-      <CreateMaintenanceTicketForm />
+      <div className='w-full max-w-[447px] mx-auto'>
+        <CreateMaintenanceTicketForm />
+      </div>
 
     </div>
   );

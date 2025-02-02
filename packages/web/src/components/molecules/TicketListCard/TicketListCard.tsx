@@ -1,6 +1,7 @@
 import { FunctionComponent, useMemo } from "react";
 import styles from './TicketListCard.module.css';
 import { getUrgencyStyle, MaintenanceTicketStatus, MaintenanceTicketUrgency } from "@/utils/ticket-helper";
+import { formatDate } from "@/utils/date";
 
 type TicketListCardProps = {
   title: string;
@@ -27,7 +28,7 @@ const TicketListCard: FunctionComponent<TicketListCardProps> = (props: TicketLis
         </div>
 
         <div className="text-right">
-          <p className="text-[#A1AFC3] text-[0.75rem] text-right mb-[10px]">{props.date}</p>
+          <p className="text-[#A1AFC3] text-[0.75rem] text-right mb-[10px]">{formatDate(new Date(props.date))}</p>
           <p className="">{props.status}</p>
         </div>
 

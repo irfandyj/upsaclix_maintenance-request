@@ -1,5 +1,5 @@
 import prisma from "../../../db";
-import { CreateMaintenanceTicketInput } from "./maintenance-ticket.typeDef";
+import { CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput } from "./maintenance-ticket.typeDef";
 
 /**
  * Create a new maintenance ticket
@@ -32,5 +32,29 @@ export const getTicketById = async (id: number) => {
     where: {
       id
     }
+  });
+}
+
+/**
+ * Update the maintenance ticket
+ */
+export const updateTicket = async (ticket: UpdateMaintenanceTicketInput) => {
+  const ticketId = typeof ticket.id === "string" ? parseInt(ticket.id) : ticket.id;
+  return await prisma.maintenanceTicket.update({
+    where: { id: ticketId },
+    data: { ...ticket, id: ticketId }
+  });
+}
+
+/**
+ * Update the status of a maintenance ticket
+ * @param id 
+ * @param status 
+ */
+export const updateTicketStatus = async (ticket: UpdateMaintenanceTicketStatusInput) => {
+  const ticketId = typeof ticket.id === "string" ? parseInt(ticket.id) : ticket.id;
+  return await prisma.maintenanceTicket.update({
+    where: { id: ticketId },
+    data: { status: ticket.status }
   });
 }

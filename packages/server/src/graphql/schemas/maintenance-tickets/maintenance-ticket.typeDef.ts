@@ -28,6 +28,7 @@ class MaintenanceTicket {
   description?: string;
 }
 
+// Please move this as a DTO later on, it suits better there
 @InputType()
 export class CreateMaintenanceTicketInput {
   
@@ -50,17 +51,28 @@ export class UpdateMaintenanceTicketInput {
   @Field(type => ID)
   id: number;
 
-  @Field()
-  title: string;
+  @Field({ nullable: true })
+  title?: string;
 
-  @Field(type => MaintenanceTicketUrgency)
-  urgency: MaintenanceTicketUrgency;
+  @Field(type => MaintenanceTicketUrgency, { nullable: true })
+  urgency?: MaintenanceTicketUrgency;
 
-  @Field(type => MaintenanceTicketStatus)
-  status: MaintenanceTicketStatus;
+  @Field(type => MaintenanceTicketStatus, { nullable: true })
+  status?: MaintenanceTicketStatus;
 
   @Field({ nullable: true })
   description?: string;
 }
+
+@InputType()
+export class UpdateMaintenanceTicketStatusInput {
+
+  @Field(type => ID)
+  id: number;
+
+  @Field(type => MaintenanceTicketStatus)
+  status: MaintenanceTicketStatus;
+}
+
 
 export { MaintenanceTicket, MaintenanceTicketUrgency, MaintenanceTicketStatus };

@@ -2,8 +2,10 @@ import { FunctionComponent, useMemo } from "react";
 import styles from './TicketListCard.module.css';
 import { getUrgencyStyle, MaintenanceTicketStatus, MaintenanceTicketUrgency } from "@/utils/ticket-helper";
 import { formatDate } from "@/utils/date";
+import Link from "next/link";
 
 type TicketListCardProps = {
+  id: number;
   title: string;
   urgency: MaintenanceTicketUrgency;
   status: MaintenanceTicketStatus;
@@ -16,7 +18,7 @@ const TicketListCard: FunctionComponent<TicketListCardProps> = (props: TicketLis
   }, [props.urgency]);
   return (
     <li className={`TicketListCard ${styles.TicketListCard} pt-5 px-[30.5px]`}>
-      <div className="flex justify-between items-center">
+      <Link href={`/${props.id}`} className="flex justify-between items-center">
         <div>
           <p className="text-[#404040] font-medium text-sm mb-[10px]">{props.title}</p>
           <p
@@ -32,7 +34,7 @@ const TicketListCard: FunctionComponent<TicketListCardProps> = (props: TicketLis
           <p className="">{props.status}</p>
         </div>
 
-      </div>
+      </Link>
     </li>
   )
 };

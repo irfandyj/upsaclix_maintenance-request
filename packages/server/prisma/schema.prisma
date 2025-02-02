@@ -9,3 +9,27 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+enum MaintenanceTicketUrgency {
+  NON_URGENT @map("non_urgent")
+  LESS_URGENT @map("less_urgent")
+  URGENT @map("urgent")
+  EMERGENCY @map("emergency")
+}
+
+enum MaintenanceTicketStatus {
+  OPEN @map("open")
+  IN_PROGRESS @map("in_progress")
+  RESOLVED @map("resolved")
+  CLOSED @map("closed")
+}
+
+model MaintenanceTicket {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  urgency     MaintenanceTicketUrgency
+  status      MaintenanceTicketStatus
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

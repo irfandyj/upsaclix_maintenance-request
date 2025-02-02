@@ -1,5 +1,6 @@
 import HomePageStatCards from '@/components/organisms/HomePageStatCards';
 import HomePageTicketList from '@/components/organisms/HomePageTicketList';
+import Link from 'next/link';
 import React from 'react';
 
 const MaintenanceRequestDashboard = () => {
@@ -20,6 +21,11 @@ const MaintenanceRequestDashboard = () => {
       <HomePageTicketList />
 
       {/* Add button */}
+      <div className="flex justify-center mt-5">
+        <Link href="/add">
+          Add Maintenance Request
+        </Link>
+      </div>
     </div>
   );
 };

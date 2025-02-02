@@ -1,20 +1,8 @@
-import { createSchema, createYoga } from 'graphql-yoga'
+import { createYoga } from 'graphql-yoga'
+import bootstrapSchema from './schemas'
 
-export const schema = createSchema({
-  typeDefs: /* GraphQL */ `
-    type Query {
-      hello: String
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => 'world'
-    }
-  }
-})
-
-
-const setupGraphQLYoga = () => {
+const setupGraphQLYoga = async function () {
+  const schema = await bootstrapSchema()
   const yoga = createYoga({
     schema
   })

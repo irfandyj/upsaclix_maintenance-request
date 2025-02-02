@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Arg, ID } from "type-graphql";
-import { MaintenanceTicket, MaintenanceTicketUrgency, MaintenanceTicketStatus } from "./maintenance-ticket.typeDef";
+import { MaintenanceTicket, MaintenanceTicketStatus, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput } from "./maintenance-ticket.typeDef";
+import { createTicket, getTicketById, getTickets } from "./maintenance-ticket.service";
 
 @Resolver(of => MaintenanceTicket)
 class MaintenanceTicketResolver {
@@ -7,41 +8,33 @@ class MaintenanceTicketResolver {
   private tickets: MaintenanceTicket[] = [];
 
   @Query(returns => [MaintenanceTicket])
-  async getTickets(): Promise<MaintenanceTicket[]> {
-    return this.tickets;
+  async getTickets() {
+    return await getTickets();
   }
 
   @Query(returns => MaintenanceTicket, { nullable: true })
-  async getTicket(@Arg("id", type => ID) id: string): Promise<MaintenanceTicket | undefined> {
-    return this.tickets.find(ticket => ticket.id === id);
+  async getTicket(@Arg("id", type => ID) id: number): Promise<MaintenanceTicket | undefined> {
+    const parsedId = parseInt(id.toString());
+    const ticket = await getTicketById(parsedId);
+    if (!ticket) return undefined;
+    return ticket;
   }
 
   @Mutation(returns => MaintenanceTicket)
   async createTicket(
-    @Arg("urgency", type => MaintenanceTicketUrgency) urgency: MaintenanceTicketUrgency,
-    @Arg("status", type => MaintenanceTicketStatus) status: MaintenanceTicketStatus,
-    @Arg("title") title: string,
-    @Arg("description", { nullable: true }) description?: string
-  ): Promise<MaintenanceTicket> {
-    const ticket = {
-      id: (this.tickets.length + 1).toString(),
-      urgency,
-      status,
-      title,
-      description
-    };
-    this.tickets.push(ticket);
+    @Arg("input") maintenanceTicketInput: CreateMaintenanceTicketInput
+  ) {
+    const ticket = await createTicket(maintenanceTicketInput);
     return ticket;
   }
 
   @Mutation(returns => MaintenanceTicket, { nullable: true })
   async updateTicketStatus(
-    @Arg("id", type => ID) id: string,
-    @Arg("status", type => MaintenanceTicketStatus) status: MaintenanceTicketStatus
+    @Arg("input") updateMaintenanceTicketInput: UpdateMaintenanceTicketInput
   ): Promise<MaintenanceTicket | undefined> {
-    const ticket = this.tickets.find(ticket => ticket.id === id);
+    const ticket = this.tickets.find(ticket => ticket.id === updateMaintenanceTicketInput.id);
     if (ticket) {
-      ticket.status = status;
+      ticket.status = updateMaintenanceTicketInput.status;
     }
     return ticket;
   }

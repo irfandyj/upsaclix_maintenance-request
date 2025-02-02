@@ -1,18 +1,5 @@
-import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
-
-enum MaintenanceTicketUrgency {
-  NON_URGENT = "non_urgent",
-  LESS_URGENT = "less_urgent",
-  URGENT = "urgent",
-  EMERGENCY = "emergency"
-}
-
-enum MaintenanceTicketStatus {
-  OPEN = "open",
-  IN_PROGRESS = "in_progress",
-  RESOLVED = "resolved",
-  CLOSED = "closed"
-}
+import { Field, ID, InputType, ObjectType, registerEnumType } from "type-graphql";
+import { MaintenanceTicketUrgency, MaintenanceTicketStatus } from "@prisma/client";
 
 registerEnumType(MaintenanceTicketUrgency, {
   name: "MaintenanceTicketUrgency"
@@ -26,7 +13,7 @@ registerEnumType(MaintenanceTicketStatus, {
 class MaintenanceTicket {
 
   @Field(type => ID)
-  id: string;
+  id: number;
 
   @Field(type => MaintenanceTicketUrgency)
   urgency: MaintenanceTicketUrgency;
@@ -36,6 +23,41 @@ class MaintenanceTicket {
 
   @Field()
   title: string;
+
+  @Field({ nullable: true })
+  description?: string;
+}
+
+@InputType()
+export class CreateMaintenanceTicketInput {
+  
+  @Field(type => MaintenanceTicketUrgency)
+  urgency: MaintenanceTicketUrgency;
+
+  @Field(type => MaintenanceTicketStatus)
+  status: MaintenanceTicketStatus;
+
+  @Field()
+  title: string;
+
+  @Field({ nullable: true })
+  description?: string;
+}
+
+@InputType()
+export class UpdateMaintenanceTicketInput {
+
+  @Field(type => ID)
+  id: number;
+
+  @Field()
+  title: string;
+
+  @Field(type => MaintenanceTicketUrgency)
+  urgency: MaintenanceTicketUrgency;
+
+  @Field(type => MaintenanceTicketStatus)
+  status: MaintenanceTicketStatus;
 
   @Field({ nullable: true })
   description?: string;

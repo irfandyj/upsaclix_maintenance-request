@@ -11,17 +11,17 @@ datasource db {
 }
 
 enum MaintenanceTicketUrgency {
-  NON_URGENT @map("non_urgent")
-  LESS_URGENT @map("less_urgent")
-  URGENT @map("urgent")
-  EMERGENCY @map("emergency")
+  NON_URGENT    @map("non_urgent")
+  LESS_URGENT   @map("less_urgent")
+  URGENT        @map("urgent")
+  EMERGENCY     @map("emergency")
 }
 
 enum MaintenanceTicketStatus {
-  OPEN @map("open")
+  OPEN        @map("open")
   IN_PROGRESS @map("in_progress")
-  RESOLVED @map("resolved")
-  CLOSED @map("closed")
+  RESOLVED    @map("resolved")
+  CLOSED      @map("closed")
 }
 
 model MaintenanceTicket {

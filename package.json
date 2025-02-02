@@ -1,0 +1,7 @@
+{
+  "name": "upscalix_maintenance-request",
+  "packageManager": "yarn@4.6.0",
+  "workspaces": [
+    "packages/*"
+  ]
+}

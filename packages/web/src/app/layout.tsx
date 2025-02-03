@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google'
+import Providers from './providers'
 import "./globals.css";
 
 // If loading a variable font, you don't need to specify the font weight
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} antialiased`}
       >
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -30,15 +30,21 @@ export type MaintenanceTicket = {
   createdAt: Scalars['DateTimeISO']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  resolvedAt?: Maybe<Scalars['DateTimeISO']['output']>;
   status: MaintenanceTicketStatus;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTimeISO']['output'];
   urgency: MaintenanceTicketUrgency;
 };
 
+export type MaintenanceTicketStats = {
+  __typename?: 'MaintenanceTicketStats';
+  averageTime: Scalars['Float']['output'];
+  open: Scalars['Float']['output'];
+  totalUrgent: Scalars['Float']['output'];
+};
+
 export enum MaintenanceTicketStatus {
-  Closed = 'CLOSED',
-  InProgress = 'IN_PROGRESS',
   Open = 'OPEN',
   Resolved = 'RESOLVED'
 }
@@ -75,6 +81,7 @@ export type MutationUpdateTicketStatusArgs = {
 export type Query = {
   __typename?: 'Query';
   getTicket?: Maybe<MaintenanceTicket>;
+  getTicketStats: MaintenanceTicketStats;
   getTickets: Array<MaintenanceTicket>;
 };
 
@@ -101,38 +108,52 @@ export type UpdateMaintenanceTicketStatusInput = {
   status: MaintenanceTicketStatus;
 };
 
+export type GetMaintenanceTicketStatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMaintenanceTicketStatsQuery = { __typename?: 'Query', getTicketStats: { __typename?: 'MaintenanceTicketStats', open: number, totalUrgent: number, averageTime: number } };
+
 export type GetMaintenanceTicketsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMaintenanceTicketsQuery = { __typename?: 'Query', getTickets: Array<{ __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any }> };
+export type GetMaintenanceTicketsQuery = { __typename?: 'Query', getTickets: Array<{ __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, resolvedAt?: any | null, createdAt: any, updatedAt: any }> };
 
 export type GetMaintenanceTicketsByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetMaintenanceTicketsByIdQuery = { __typename?: 'Query', getTicket?: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } | null };
+export type GetMaintenanceTicketsByIdQuery = { __typename?: 'Query', getTicket?: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, resolvedAt?: any | null, createdAt: any, updatedAt: any } | null };
 
 export type CreateMaintenanceTicketMutationVariables = Exact<{
   input: CreateMaintenanceTicketInput;
 }>;
 
 
-export type CreateMaintenanceTicketMutation = { __typename?: 'Mutation', createTicket: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } };
+export type CreateMaintenanceTicketMutation = { __typename?: 'Mutation', createTicket: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, resolvedAt?: any | null, createdAt: any, updatedAt: any } };
 
 export type MaintenanceTicketCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MaintenanceTicketCreatedSubscription = { __typename?: 'Subscription', ticketCreated: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } };
+export type MaintenanceTicketCreatedSubscription = { __typename?: 'Subscription', ticketCreated: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, resolvedAt?: any | null, createdAt: any, updatedAt: any } };
 
 export type UpdateMaintenanceTicketMutationVariables = Exact<{
   input: UpdateMaintenanceTicketInput;
 }>;
 
 
-export type UpdateMaintenanceTicketMutation = { __typename?: 'Mutation', updateTicket?: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } | null };
+export type UpdateMaintenanceTicketMutation = { __typename?: 'Mutation', updateTicket?: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, resolvedAt?: any | null, createdAt: any, updatedAt: any } | null };
 
 
+export const GetMaintenanceTicketStatsDocument = gql`
+    query getMaintenanceTicketStats {
+  getTicketStats {
+    open
+    totalUrgent
+    averageTime
+  }
+}
+    `;
 export const GetMaintenanceTicketsDocument = gql`
     query getMaintenanceTickets {
   getTickets {
@@ -141,6 +162,7 @@ export const GetMaintenanceTicketsDocument = gql`
     status
     urgency
     description
+    resolvedAt
     createdAt
     updatedAt
   }
@@ -154,6 +176,7 @@ export const GetMaintenanceTicketsByIdDocument = gql`
     status
     urgency
     description
+    resolvedAt
     createdAt
     updatedAt
   }
@@ -167,6 +190,7 @@ export const CreateMaintenanceTicketDocument = gql`
     status
     urgency
     description
+    resolvedAt
     createdAt
     updatedAt
   }
@@ -180,6 +204,7 @@ export const MaintenanceTicketCreatedDocument = gql`
     status
     urgency
     description
+    resolvedAt
     createdAt
     updatedAt
   }
@@ -193,6 +218,7 @@ export const UpdateMaintenanceTicketDocument = gql`
     status
     urgency
     description
+    resolvedAt
     createdAt
     updatedAt
   }
@@ -206,6 +232,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    getMaintenanceTicketStats(variables?: GetMaintenanceTicketStatsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMaintenanceTicketStatsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMaintenanceTicketStatsQuery>(GetMaintenanceTicketStatsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMaintenanceTicketStats', 'query', variables);
+    },
     getMaintenanceTickets(variables?: GetMaintenanceTicketsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMaintenanceTicketsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMaintenanceTicketsQuery>(GetMaintenanceTicketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMaintenanceTickets', 'query', variables);
     },

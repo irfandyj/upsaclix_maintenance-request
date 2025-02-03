@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType, registerEnumType } from "type-graphql";
+import { Field, ID,InputType, ObjectType, registerEnumType } from "type-graphql";
 import { MaintenanceTicketUrgency, MaintenanceTicketStatus } from "@prisma/client";
 
 registerEnumType(MaintenanceTicketUrgency, {
@@ -8,6 +8,18 @@ registerEnumType(MaintenanceTicketUrgency, {
 registerEnumType(MaintenanceTicketStatus, {
   name: "MaintenanceTicketStatus"
 });
+
+@ObjectType()
+export class MaintenanceTicketStats {
+  @Field()
+  open: number;
+
+  @Field()
+  totalUrgent: number;
+
+  @Field()
+  averageTime: number;
+}
 
 @ObjectType()
 class MaintenanceTicket {
@@ -27,7 +39,7 @@ class MaintenanceTicket {
   @Field({ nullable: true })
   description?: string;
 
-  @Field({ nullable: true })
+  @Field(() => Date, { nullable: true })
   resolvedAt?: Date;
 
   @Field()

@@ -1,12 +1,15 @@
 import { Resolver, Query, Mutation, Arg, ID, Subscription, Root } from "type-graphql";
-import { MaintenanceTicket, MaintenanceTicketStatus, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput, CreateMaintenanceTicketPayload } from "./maintenance-ticket.typeDef";
-import { createTicket, getTicketById, getTickets, updateTicket, updateTicketStatus } from "./maintenance-ticket.service";
+import { MaintenanceTicket, MaintenanceTicketStatus, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput, CreateMaintenanceTicketPayload, MaintenanceTicketStats } from "./maintenance-ticket.typeDef";
+import { createTicket, getTicketById, getTickets, getTicketStats, updateTicket, updateTicketStatus } from "./maintenance-ticket.service";
 import { pubSub, Topics } from "../pubSub";
 
 @Resolver(of => MaintenanceTicket)
 class MaintenanceTicketResolver {
-  
-  private tickets: MaintenanceTicket[] = [];
+
+  @Query (returns => MaintenanceTicketStats)
+  async getTicketStats(): Promise<MaintenanceTicketStats | undefined> {
+    return await getTicketStats();
+  }
 
   @Query(returns => [MaintenanceTicket])
   async getTickets() {

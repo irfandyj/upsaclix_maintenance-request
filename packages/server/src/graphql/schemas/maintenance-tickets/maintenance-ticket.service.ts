@@ -1,5 +1,5 @@
 import prisma from "../../../db";
-import { CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput } from "./maintenance-ticket.typeDef";
+import { CreateMaintenanceTicketInput, MaintenanceTicketStats, MaintenanceTicketStatus, MaintenanceTicketUrgency, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput } from "./maintenance-ticket.typeDef";
 
 /**
  * Create a new maintenance ticket
@@ -14,6 +14,40 @@ export const createTicket = async (maintenanceTicketInput: CreateMaintenanceTick
       description: maintenanceTicketInput.description ?? ""
     }
   });
+}
+
+/**
+ * Get the maintenance ticket statistics
+ */
+export const getTicketStats = async (): Promise<MaintenanceTicketStats> => {
+  const totalOpenTickets = await prisma.maintenanceTicket.count({
+    where: { status: MaintenanceTicketStatus.OPEN }
+  });
+
+  // Include emergency and urgent, but not status resolved
+  const totalUrgentTickets = await prisma.maintenanceTicket.count({
+    where: {
+      urgency: { in: [MaintenanceTicketUrgency.URGENT, MaintenanceTicketUrgency.EMERGENCY] },
+      status: { not: MaintenanceTicketStatus.RESOLVED }
+    }
+  });
+
+  // Average time in days to resolve a ticket, where resolvedAt is not null
+  // resolvedAt and createdAt are both Date fields
+  // const averageTime = await prisma.maintenanceTicket.aggregate({
+  //   _avg: {
+  //     id: true
+  //   },
+  //   where: {
+  //     resolvedAt: { not: undefined }
+  //   }
+  // });
+
+  return {
+    open: totalOpenTickets ?? 0,
+    totalUrgent: totalUrgentTickets ?? 0,
+    averageTime: 0
+  };
 }
 
 /**

@@ -27,6 +27,9 @@ class MaintenanceTicket {
   @Field({ nullable: true })
   description?: string;
 
+  @Field({ nullable: true })
+  resolvedAt?: Date;
+
   @Field()
   createdAt: Date;
 

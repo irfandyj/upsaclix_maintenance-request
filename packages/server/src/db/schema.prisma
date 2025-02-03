@@ -16,24 +16,24 @@ generator typegraphql {
 }
 
 enum MaintenanceTicketUrgency {
-  NON_URGENT    @map("non_urgent")
-  LESS_URGENT   @map("less_urgent")
-  URGENT        @map("urgent")
-  EMERGENCY     @map("emergency")
+  NON_URGENT  @map("non_urgent")
+  LESS_URGENT @map("less_urgent")
+  URGENT      @map("urgent")
+  EMERGENCY   @map("emergency")
 }
 
 enum MaintenanceTicketStatus {
-  OPEN        @map("open")
-  RESOLVED    @map("resolved")
+  OPEN     @map("open")
+  RESOLVED @map("resolved")
 }
 
 model MaintenanceTicket {
-  id          Int      @id @default(autoincrement())
+  id          Int                      @id @default(autoincrement())
   title       String
-  description String
+  description String                   @default("")
   urgency     MaintenanceTicketUrgency
   status      MaintenanceTicketStatus
-  resolvedAt  DateTime @default(dbgenerated("null"))
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  resolvedAt  String                   @default("") // Using DateTime has been wasting my time :(
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
 }

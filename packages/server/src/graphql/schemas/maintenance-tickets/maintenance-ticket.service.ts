@@ -11,7 +11,7 @@ export const createTicket = async (maintenanceTicketInput: CreateMaintenanceTick
       urgency: maintenanceTicketInput.urgency,
       status: maintenanceTicketInput.status ?? MaintenanceTicketStatus.OPEN,
       title: maintenanceTicketInput.title,
-      description: maintenanceTicketInput.description ?? ""
+      description: maintenanceTicketInput.description ?? "",
     }
   });
 }

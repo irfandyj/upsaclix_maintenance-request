@@ -12,7 +12,7 @@ type TicketListCardProps = {
   date: string;
 }
 
-const TicketListCard: FunctionComponent<TicketListCardProps> = (props: TicketListCardProps) => {
+const TicketListCard: FunctionComponent<TicketListCardProps> = (props) => {
   const urgencyStyle = useMemo(() => {
     return getUrgencyStyle(props.urgency);
   }, [props.urgency]);

@@ -8,5 +8,8 @@ export const {
   createMaintenanceTicket,
   getMaintenanceTickets,
   getMaintenanceTicketsById,
-  updateMaintenanceTicket
+  updateMaintenanceTicket,
+
+  // Subscriptions, idk how to use it here!
+  maintenanceTicketCreated,
 } = getSdk(gqlClient);

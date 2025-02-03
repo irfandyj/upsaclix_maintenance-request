@@ -9,7 +9,7 @@ import { getMaintenanceTickets } from '@/lib/graphql/api';
 import Link from 'next/link';
 import React from 'react';
 
-async function HomePage () {
+async function HomePage() {
   const stats = [
     { title: 'Open Requests', value: 2 },
     { title: 'Urgent Requests', value: 3 },

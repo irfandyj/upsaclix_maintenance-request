@@ -7,12 +7,13 @@ interface TicketCardStatusProps {
   onClick: () => void;
 }
 
-function TicketCardStatus ({ status }: TicketCardStatusProps) {
+function TicketCardStatus ({ status, onClick }: TicketCardStatusProps) {
   const statusStyle = getStatusStyle(status);
   return (
     <div
       style={{ backgroundColor: statusStyle.bgColor, color: statusStyle.textColor }}
-      className={`TicketCardStatus TicketCardStatus--${status} px-2 py-[3px] rounded-[100px]`}
+      className={`TicketCardStatus TicketCardStatus--${status} px-2 py-[3px] rounded-[100px] hover:cursor-pointer`}
+      onClick={onClick}
     >
       {statusStyle.text}
     </div>

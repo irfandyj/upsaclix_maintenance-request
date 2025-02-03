@@ -2,13 +2,18 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { createMaintenanceTicket } from '@/lib/graphql/api';
+import { MaintenanceTicketStatus, MaintenanceTicketUrgency } from "@/lib/graphql/sdk";
 
 function CreateMaintenanceTicketForm() {
   const { register, handleSubmit } = useForm();
   const [data, setData] = useState("");
 
-  function onSubmit(data: any) {
+  // Fix this data type later
+  async function onSubmit(data: any) {
     setData(JSON.stringify(data));
+    console.log(data);
+    await createMaintenanceTicket({ input: data });
   }
 
   return (
@@ -23,10 +28,10 @@ function CreateMaintenanceTicketForm() {
           {...register("urgency", { required: true })}
           className="w-full p-3 rounded-lg bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary"
         >
-          <option value="">Emergency</option>
-          <option value="non_urgent">Non Urgent</option>
-          <option value="less_urgent">Less Urgent</option>
-          <option value="urgent">Urgent</option>
+          <option value={MaintenanceTicketUrgency.NonUrgent}>Non Urgent</option>
+          <option value={MaintenanceTicketUrgency.LessUrgent}>Less Urgent</option>
+          <option value={MaintenanceTicketUrgency.Urgent}>Urgent</option>
+          {/* <option value="">Emergency</option> */}
         </select>
       </div>
 
@@ -39,9 +44,8 @@ function CreateMaintenanceTicketForm() {
           {...register("status")}
           className="w-full p-3 rounded-lg bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary"
         >
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Resolved">Resolved</option>
+          <option value={MaintenanceTicketStatus.Open}>Open</option>
+          <option value={MaintenanceTicketStatus.Resolved}>Resolved</option>
         </select>
       </div>
 

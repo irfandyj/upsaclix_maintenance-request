@@ -2,12 +2,7 @@ import CreateMaintenanceTicketForm from '@/components/organisms/CreateMaintenanc
 import Link from 'next/link';
 import React from 'react';
 
-const MaintenanceRequestDashboard = () => {
-  const stats = [
-    { title: 'Open Requests', value: 2 },
-    { title: 'Urgent Requests', value: 3 },
-    { title: 'Average time (days) to respond', value: 3 },
-  ]
+async function CreateMaintenanceTicketPage() {
 
   return (
     <div className="CreateMaintenanceTicketPage mx-auto flex flex-col p-6 max-w-4xl ">
@@ -16,7 +11,7 @@ const MaintenanceRequestDashboard = () => {
         <Link href="/">Back</Link>
         <h1 className="text-xl font-semibold ">Maintenance Request</h1>
       </div>
-      
+
       {/* Create Maintenance Ticket Form */}
       <div className='w-full max-w-[447px] mx-auto'>
         <CreateMaintenanceTicketForm />
@@ -26,4 +21,4 @@ const MaintenanceRequestDashboard = () => {
   );
 };
 
-export default MaintenanceRequestDashboard;
+export default CreateMaintenanceTicketPage;

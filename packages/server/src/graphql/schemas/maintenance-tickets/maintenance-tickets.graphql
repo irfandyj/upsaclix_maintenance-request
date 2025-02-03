@@ -9,3 +9,61 @@ query getMaintenanceTickets {
     updatedAt
   }
 }
+
+query getMaintenanceTicketsById($id: ID!) {
+  getTicket(id: $id) {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
+
+enum MaintenanceTicketStatus {
+  OPEN
+  RESOLVED
+}
+enum MaintenanceTicketUrgency {
+  NON_URGENT
+  LESS_URGENT
+  URGENT
+  EMERGENCY
+}
+input CreateMaintenanceTicketInput {
+  title: String!
+  status: MaintenanceTicketStatus
+  urgency: MaintenanceTicketUrgency!
+  description: String
+}
+mutation createMaintenanceTicket($input: CreateMaintenanceTicketInput!) {
+  createTicket(input: $input) {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
+
+input UpdateMaintenanceTicketInput {
+  title: String
+  status: MaintenanceTicketStatus
+  urgency: MaintenanceTicketUrgency
+  description: String
+}
+mutation updateMaintenanceTicket($input: UpdateMaintenanceTicketInput!) {
+  updateTicket(input: $input) {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}

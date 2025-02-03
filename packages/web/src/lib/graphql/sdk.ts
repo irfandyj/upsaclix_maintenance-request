@@ -101,10 +101,70 @@ export type GetMaintenanceTicketsQueryVariables = Exact<{ [key: string]: never; 
 
 export type GetMaintenanceTicketsQuery = { __typename?: 'Query', getTickets: Array<{ __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any }> };
 
+export type GetMaintenanceTicketsByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetMaintenanceTicketsByIdQuery = { __typename?: 'Query', getTicket?: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } | null };
+
+export type CreateMaintenanceTicketMutationVariables = Exact<{
+  input: CreateMaintenanceTicketInput;
+}>;
+
+
+export type CreateMaintenanceTicketMutation = { __typename?: 'Mutation', createTicket: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } };
+
+export type UpdateMaintenanceTicketMutationVariables = Exact<{
+  input: UpdateMaintenanceTicketInput;
+}>;
+
+
+export type UpdateMaintenanceTicketMutation = { __typename?: 'Mutation', updateTicket?: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } | null };
+
 
 export const GetMaintenanceTicketsDocument = gql`
     query getMaintenanceTickets {
   getTickets {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const GetMaintenanceTicketsByIdDocument = gql`
+    query getMaintenanceTicketsById($id: ID!) {
+  getTicket(id: $id) {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const CreateMaintenanceTicketDocument = gql`
+    mutation createMaintenanceTicket($input: CreateMaintenanceTicketInput!) {
+  createTicket(input: $input) {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const UpdateMaintenanceTicketDocument = gql`
+    mutation updateMaintenanceTicket($input: UpdateMaintenanceTicketInput!) {
+  updateTicket(input: $input) {
     id
     title
     status
@@ -125,6 +185,15 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     getMaintenanceTickets(variables?: GetMaintenanceTicketsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMaintenanceTicketsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMaintenanceTicketsQuery>(GetMaintenanceTicketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMaintenanceTickets', 'query', variables);
+    },
+    getMaintenanceTicketsById(variables: GetMaintenanceTicketsByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMaintenanceTicketsByIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMaintenanceTicketsByIdQuery>(GetMaintenanceTicketsByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getMaintenanceTicketsById', 'query', variables);
+    },
+    createMaintenanceTicket(variables: CreateMaintenanceTicketMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateMaintenanceTicketMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateMaintenanceTicketMutation>(CreateMaintenanceTicketDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createMaintenanceTicket', 'mutation', variables);
+    },
+    updateMaintenanceTicket(variables: UpdateMaintenanceTicketMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateMaintenanceTicketMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateMaintenanceTicketMutation>(UpdateMaintenanceTicketDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateMaintenanceTicket', 'mutation', variables);
     }
   };
 }

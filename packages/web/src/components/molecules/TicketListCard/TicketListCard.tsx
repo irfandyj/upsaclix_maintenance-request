@@ -30,7 +30,7 @@ const TicketListCard: FunctionComponent<TicketListCardProps> = (props) => {
         </div>
 
         <div className="text-right">
-          <p className="text-[#A1AFC3] text-[0.75rem] text-right mb-[10px]">{formatDate(new Date(props.date))}</p>
+          <p className="text-[#A1AFC3] text-[0.75rem] text-right mb-[10px]">{formatDate(props.date)}</p>
           <p className="">{props.status}</p>
         </div>
 

@@ -1,14 +1,11 @@
+import dayjs from "dayjs";
 
 /**
- * Get the current date in the format 'dd MMM yyyy'
+ * Get the current date in the format 'D MMM yyyy'
  * @param date 
  * @returns 
  */
 // This is not right yet.
-export function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+export function formatDate(date: string): string {
+  return dayjs(date).format("D MMM YYYY");
 }

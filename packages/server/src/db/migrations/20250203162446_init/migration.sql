@@ -5,7 +5,7 @@ CREATE TABLE "MaintenanceTicket" (
     "description" TEXT NOT NULL,
     "urgency" TEXT NOT NULL,
     "status" TEXT NOT NULL,
-    "resolvedAt" DATETIME,
+    "resolvedAt" DATETIME NOT NULL DEFAULT null,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );

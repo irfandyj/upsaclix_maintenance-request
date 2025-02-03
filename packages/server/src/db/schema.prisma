@@ -33,7 +33,7 @@ model MaintenanceTicket {
   description String
   urgency     MaintenanceTicketUrgency
   status      MaintenanceTicketStatus
-  resolvedAt  DateTime?
+  resolvedAt  DateTime @default(dbgenerated("null"))
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

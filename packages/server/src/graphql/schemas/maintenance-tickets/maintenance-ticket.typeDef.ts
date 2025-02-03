@@ -26,6 +26,12 @@ class MaintenanceTicket {
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field()
+  createdAt: Date;
+
+  @Field()
+  updatedAt: Date;
 }
 
 // Please move this as a DTO later on, it suits better there

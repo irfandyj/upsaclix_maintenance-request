@@ -73,7 +73,6 @@ function CreateMaintenanceTicketForm() {
           className="w-full p-3 rounded-lg bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
         />
       </div>
-      <p>{data}</p>
       <button
         type="submit"
         className="w-full max-w-[268px] mx-auto bg-primary text-white py-3 px-4 rounded-lg hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"

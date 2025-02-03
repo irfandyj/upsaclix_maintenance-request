@@ -1,8 +1,6 @@
 import "reflect-metadata";
 import setupServer from "./server";
 
-const PORT = 3000;
-
 async function bootstrap() {
   const server = await setupServer();
   
@@ -10,8 +8,8 @@ async function bootstrap() {
     res.send('Hello World!');
   });
 
-  server.listen(PORT, () => {
-    console.log(`Server is running on localhost:${PORT}`);
+  server.listen(process.env.SERVER_PORT, () => {
+    console.log(`Server is running on localhost:${process.env.SERVER_PORT}`);
   });
 }
 

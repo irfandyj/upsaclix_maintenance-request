@@ -74,6 +74,15 @@ export const getTicketById = async (id: number) => {
  */
 export const updateTicket = async (ticket: UpdateMaintenanceTicketInput) => {
   const ticketId = typeof ticket.id === "string" ? parseInt(ticket.id) : ticket.id;
+
+  // If update ticket status to resolved, set the resolvedAt field
+  if (ticket.status === MaintenanceTicketStatus.RESOLVED) {
+    return await prisma.maintenanceTicket.update({
+      where: { id: ticketId },
+      data: { ...ticket, id: ticketId, resolvedAt: new Date().toISOString() }
+    });
+  }
+
   return await prisma.maintenanceTicket.update({
     where: { id: ticketId },
     data: { ...ticket, id: ticketId }
@@ -89,6 +98,10 @@ export const updateTicketStatus = async (ticket: UpdateMaintenanceTicketStatusIn
   const ticketId = typeof ticket.id === "string" ? parseInt(ticket.id) : ticket.id;
   return await prisma.maintenanceTicket.update({
     where: { id: ticketId },
-    data: { status: ticket.status }
+    data: {
+      status: ticket.status,
+      resolvedAt: ticket.status === MaintenanceTicketStatus.RESOLVED ?
+        new Date().toISOString() : undefined
+    }
   });
 }

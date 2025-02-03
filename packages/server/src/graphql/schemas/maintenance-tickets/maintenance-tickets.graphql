@@ -1,0 +1,11 @@
+query getMaintenanceTickets {
+  getTickets {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}

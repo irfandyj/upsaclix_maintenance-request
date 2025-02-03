@@ -1,3 +1,21 @@
+query getMaintenanceTicketVM {
+  getTicketStats {
+    open
+    totalUrgent
+    averageTime
+  }
+  getTickets {
+    id
+    title
+    status
+    urgency
+    description
+    resolvedAt
+    createdAt
+    updatedAt
+  }
+}
+
 query getMaintenanceTicketStats {
   getTicketStats {
     open

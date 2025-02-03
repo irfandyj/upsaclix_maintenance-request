@@ -6,6 +6,8 @@ const gqlClient = new GraphQLClient("http://localhost:3333/graphql");
 
 export const {
   createMaintenanceTicket,
+  getMaintenanceTicketVM,
+  getMaintenanceTicketStats,
   getMaintenanceTickets,
   getMaintenanceTicketsById,
   updateMaintenanceTicket,

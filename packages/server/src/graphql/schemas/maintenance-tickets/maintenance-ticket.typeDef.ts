@@ -51,6 +51,16 @@ export class CreateMaintenanceTicketInput {
   description?: string;
 }
 
+export interface CreateMaintenanceTicketPayload {
+  id: number;
+  urgency: MaintenanceTicketUrgency;
+  status: MaintenanceTicketStatus;
+  title: string;
+  description?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 @InputType()
 export class UpdateMaintenanceTicketInput {
 

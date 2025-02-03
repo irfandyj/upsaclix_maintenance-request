@@ -1,6 +1,7 @@
-import { Resolver, Query, Mutation, Arg, ID } from "type-graphql";
-import { MaintenanceTicket, MaintenanceTicketStatus, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput } from "./maintenance-ticket.typeDef";
+import { Resolver, Query, Mutation, Arg, ID, Subscription, Root } from "type-graphql";
+import { MaintenanceTicket, MaintenanceTicketStatus, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput, CreateMaintenanceTicketPayload } from "./maintenance-ticket.typeDef";
 import { createTicket, getTicketById, getTickets, updateTicket, updateTicketStatus } from "./maintenance-ticket.service";
+import { pubSub, Topics } from "../pubSub";
 
 @Resolver(of => MaintenanceTicket)
 class MaintenanceTicketResolver {
@@ -25,6 +26,11 @@ class MaintenanceTicketResolver {
     @Arg("input") maintenanceTicketInput: CreateMaintenanceTicketInput
   ) {
     const ticket = await createTicket(maintenanceTicketInput);
+    
+    // Trigger subscriptions topics
+    const payload: CreateMaintenanceTicketPayload = ticket;
+    pubSub.publish(Topics.MAINTENANCE_TICKET_CREATED, payload);
+
     return ticket;
   }
 
@@ -48,6 +54,11 @@ class MaintenanceTicketResolver {
       // Should throw an error here
       return undefined;
     }
+    return ticket;
+  }
+
+  @Subscription({ topics: Topics.MAINTENANCE_TICKET_CREATED, })
+  ticketCreated(@Root() ticket: CreateMaintenanceTicketPayload): MaintenanceTicket {
     return ticket;
   }
 }

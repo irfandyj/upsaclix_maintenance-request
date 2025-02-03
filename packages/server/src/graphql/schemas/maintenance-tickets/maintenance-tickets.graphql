@@ -49,6 +49,17 @@ mutation createMaintenanceTicket($input: CreateMaintenanceTicketInput!) {
     updatedAt
   }
 }
+subscription maintenanceTicketCreated {
+  ticketCreated {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
 
 input UpdateMaintenanceTicketInput {
   title: String

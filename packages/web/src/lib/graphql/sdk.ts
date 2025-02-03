@@ -83,6 +83,11 @@ export type QueryGetTicketArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  ticketCreated: MaintenanceTicket;
+};
+
 export type UpdateMaintenanceTicketInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
@@ -114,6 +119,11 @@ export type CreateMaintenanceTicketMutationVariables = Exact<{
 
 
 export type CreateMaintenanceTicketMutation = { __typename?: 'Mutation', createTicket: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } };
+
+export type MaintenanceTicketCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MaintenanceTicketCreatedSubscription = { __typename?: 'Subscription', ticketCreated: { __typename?: 'MaintenanceTicket', id: string, title: string, status: MaintenanceTicketStatus, urgency: MaintenanceTicketUrgency, description?: string | null, createdAt: any, updatedAt: any } };
 
 export type UpdateMaintenanceTicketMutationVariables = Exact<{
   input: UpdateMaintenanceTicketInput;
@@ -162,6 +172,19 @@ export const CreateMaintenanceTicketDocument = gql`
   }
 }
     `;
+export const MaintenanceTicketCreatedDocument = gql`
+    subscription maintenanceTicketCreated {
+  ticketCreated {
+    id
+    title
+    status
+    urgency
+    description
+    createdAt
+    updatedAt
+  }
+}
+    `;
 export const UpdateMaintenanceTicketDocument = gql`
     mutation updateMaintenanceTicket($input: UpdateMaintenanceTicketInput!) {
   updateTicket(input: $input) {
@@ -191,6 +214,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     createMaintenanceTicket(variables: CreateMaintenanceTicketMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateMaintenanceTicketMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateMaintenanceTicketMutation>(CreateMaintenanceTicketDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createMaintenanceTicket', 'mutation', variables);
+    },
+    maintenanceTicketCreated(variables?: MaintenanceTicketCreatedSubscriptionVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<MaintenanceTicketCreatedSubscription> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MaintenanceTicketCreatedSubscription>(MaintenanceTicketCreatedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'maintenanceTicketCreated', 'subscription', variables);
     },
     updateMaintenanceTicket(variables: UpdateMaintenanceTicketMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateMaintenanceTicketMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateMaintenanceTicketMutation>(UpdateMaintenanceTicketDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateMaintenanceTicket', 'mutation', variables);

@@ -9,7 +9,7 @@ export const createTicket = async (maintenanceTicketInput: CreateMaintenanceTick
   return await prisma.maintenanceTicket.create({
     data: {
       urgency: maintenanceTicketInput.urgency,
-      status: maintenanceTicketInput.status,
+      status: maintenanceTicketInput.status ?? MaintenanceTicketStatus.OPEN,
       title: maintenanceTicketInput.title,
       description: maintenanceTicketInput.description ?? ""
     }

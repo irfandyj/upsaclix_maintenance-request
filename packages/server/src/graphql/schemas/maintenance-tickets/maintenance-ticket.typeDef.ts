@@ -57,7 +57,7 @@ export class CreateMaintenanceTicketInput {
   urgency: MaintenanceTicketUrgency;
 
   @Field(type => MaintenanceTicketStatus)
-  status: MaintenanceTicketStatus;
+  status?: MaintenanceTicketStatus;
 
   @Field()
   title: string;

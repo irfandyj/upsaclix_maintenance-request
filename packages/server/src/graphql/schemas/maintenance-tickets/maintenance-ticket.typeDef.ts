@@ -72,6 +72,7 @@ export interface CreateMaintenanceTicketPayload {
   status: MaintenanceTicketStatus;
   title: string;
   description?: string;
+  resolvedAt?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -93,6 +94,17 @@ export class UpdateMaintenanceTicketInput {
 
   @Field({ nullable: true })
   description?: string;
+}
+
+export interface UpdateMaintenanceTicketPayload {
+  id: number;
+  title: string;
+  urgency: MaintenanceTicketUrgency;
+  status: MaintenanceTicketStatus;
+  description: string;
+  resolvedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @InputType()

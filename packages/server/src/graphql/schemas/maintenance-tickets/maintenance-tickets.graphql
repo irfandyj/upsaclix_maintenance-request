@@ -90,6 +90,18 @@ subscription maintenanceTicketCreated {
     updatedAt
   }
 }
+subscription maintenanceTicketUpdated {
+  ticketUpdated {
+    id
+    title
+    status
+    urgency
+    description
+    resolvedAt
+    createdAt
+    updatedAt
+  }
+}
 
 input UpdateMaintenanceTicketInput {
   title: String

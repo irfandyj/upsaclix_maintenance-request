@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Arg, ID, Subscription, Root } from "type-graphql";
-import { MaintenanceTicket, MaintenanceTicketStatus, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput, CreateMaintenanceTicketPayload, MaintenanceTicketStats } from "./maintenance-ticket.typeDef";
+import { MaintenanceTicket, CreateMaintenanceTicketInput, UpdateMaintenanceTicketInput, UpdateMaintenanceTicketStatusInput, CreateMaintenanceTicketPayload, MaintenanceTicketStats, UpdateMaintenanceTicketPayload } from "./maintenance-ticket.typeDef";
 import { createTicket, getTicketById, getTickets, getTicketStats, updateTicket, updateTicketStatus } from "./maintenance-ticket.service";
 import { pubSub, Topics } from "../pubSub";
 
@@ -64,6 +64,20 @@ class MaintenanceTicketResolver {
   ticketCreated(@Root() ticket: CreateMaintenanceTicketPayload): MaintenanceTicket {
     return ticket;
   }
+
+  @Subscription({ topics: Topics.MAINTENANCE_TICKET_UPDATED, })
+  ticketUpdated(@Root() ticket: UpdateMaintenanceTicketPayload): MaintenanceTicket {
+    return ticket;
+  }
+
+  // Was trying to get all the websocket in one go, but it's not working.
+  // Something related to it being async function cause it to not work.
+  // @Subscription({
+  //   topics: [Topics.MAINTENANCE_TICKET_CREATED, Topics.MAINTENANCE_TICKET_UPDATED],
+  // })
+  // subscribeDashboard(): SubscribeDashboard {
+  //   return dashboardVal;
+  // }
 }
 
 export { MaintenanceTicketResolver };

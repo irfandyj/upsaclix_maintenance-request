@@ -9,4 +9,5 @@ export enum Topics {
 
 export const pubSub = createPubSub<{
   [Topics.MAINTENANCE_TICKET_CREATED]: [CreateMaintenanceTicketPayload];
+  [Topics.MAINTENANCE_TICKET_UPDATED]: [CreateMaintenanceTicketPayload];
 }>();

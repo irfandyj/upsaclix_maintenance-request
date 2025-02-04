@@ -2,10 +2,11 @@
 
 # Setup Guide
 1. Run `yarn install`
-2. Run `yarn workspace server prisma migrate dev --name init` to create SQLite Database
-3. Run `yarn workspace server prisma:generate` to generate Prisma Client
-4. Run `yarn workspace server start:dev` to initiate the GraphQL server
-5. Run `yarn workspace web dev` to initiate NextJS 15 with App Router
+2. Run `yarn workspace server dlx prisma init --datasource-provider sqlite` to create the SQLiteDatabase
+3. Run `yarn workspace server prisma migrate dev --name init` to initialize the SQL Schema
+4. Run `yarn workspace server prisma:generate` to generate Prisma Client
+5. Run `yarn workspace server start:dev` to initiate the GraphQL server
+6. Run `yarn workspace web dev` to initiate NextJS 15 with App Router
 
 # Features
 
